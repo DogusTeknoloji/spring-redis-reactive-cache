@@ -1,5 +1,4 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 plugins {
     id("org.springframework.boot") version "2.7.3"
@@ -11,7 +10,7 @@ plugins {
 }
 
 group = "com.dteknoloji"
-version = "1.0.2"
+version = "1.0.3"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
 repositories {
@@ -23,7 +22,7 @@ publishing {
     publications {
         create<MavenPublication>("maven") {
             groupId = "com.dteknoloji"
-            version = "1.0.2"
+            version = "1.0.3"
             artifactId = "spring-redis-reactive-cache"
             from(components["java"])
         }
@@ -76,10 +75,13 @@ tasks.withType<Test> {
     useJUnitPlatform()
 }
 
-tasks.withType<BootJar> {
-    enabled = false
-}
+tasks {
+    jar {
+        enabled = true
+        archiveClassifier.set("")
+    }
 
-tasks.withType<Jar> {
-    enabled = true
+    bootJar {
+        enabled = false
+    }
 }
