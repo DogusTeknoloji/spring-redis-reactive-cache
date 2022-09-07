@@ -2,6 +2,7 @@ package com.dteknoloji.springredisreactivecache.config
 
 import com.dteknoloji.springredisreactivecache.aspect.ReactiveRedisCacheAspect
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean
@@ -19,7 +20,7 @@ class ReactiveCachingConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    fun objectMapper() = ObjectMapper()
+    fun objectMapper() = jacksonObjectMapper()
 
     @Bean
     @Primary

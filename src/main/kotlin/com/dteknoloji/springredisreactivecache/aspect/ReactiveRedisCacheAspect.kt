@@ -47,7 +47,7 @@ class ReactiveRedisCacheAspect(
 
         return joinPoint.runCoroutine {
             joinPoint.proceedCoroutine()?.let {
-                val id = resolveUniqueIdentifierValue(it)
+                val id = it.resolveUniqueIdentifierValue(annotation.idPropertyName)
                 putToCache("${annotation.keyPrefix}$id", annotation.hashKey, annotation.expireDuration, it)
                 return@let it
             } ?: joinPoint.proceedCoroutine()
@@ -103,10 +103,12 @@ class ReactiveRedisCacheAspect(
             }
 
             logger.debug("Record doesn't exists on cache: $key")
+            return@async null
         }
     }
 
     private suspend fun getFromRealCall(joinPoint: ProceedingJoinPoint, key: String, hashKey: String, type: Class<out Any>): Any? {
+        logger.debug("Getting from real call")
         return joinPoint.proceedCoroutine()?.let {
             putToCache(key, hashKey, "P1D", it)
             objectMapper.convertValue(it, type)

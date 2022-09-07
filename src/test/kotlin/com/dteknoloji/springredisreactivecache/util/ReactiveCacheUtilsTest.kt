@@ -79,7 +79,7 @@ class ReactiveCacheUtilsTest {
         val entity = CacheableCustomer(id = customerId)
 
         // When
-        val actual = resolveUniqueIdentifierValue(entity)
+        val actual = entity.resolveUniqueIdentifierValue()
 
         // Then
         assertEquals(customerId, actual)

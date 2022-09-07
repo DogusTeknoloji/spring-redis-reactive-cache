@@ -4,7 +4,6 @@ import org.aspectj.lang.JoinPoint
 import org.aspectj.lang.reflect.MethodSignature
 import org.slf4j.LoggerFactory
 import java.lang.reflect.Method
-import java.util.UUID
 import kotlin.coroutines.Continuation
 import kotlin.reflect.full.memberProperties
 
@@ -42,6 +41,6 @@ fun assertSuspending(method: Method) {
     if (!isSuspending(method)) throw UnsupportedOperationException("Only suspending methods allowed")
 }
 
-fun resolveUniqueIdentifierValue(entity: Any): UUID {
-    return entity::class.memberProperties.find { kProperty1 -> kProperty1.name == "id" }!!.getter.call(entity) as UUID
+fun Any.resolveUniqueIdentifierValue(propertyName: String = "id"): Any {
+    return this::class.memberProperties.find { kProperty1 -> kProperty1.name == propertyName }!!.getter.call(this)!!
 }

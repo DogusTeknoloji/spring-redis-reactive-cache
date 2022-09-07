@@ -24,4 +24,6 @@ annotation class RedisReactiveCachePut(
      * Ex: P1D
      */
     val expireDuration: String,
+
+    val idPropertyName: String = "id"
 )
