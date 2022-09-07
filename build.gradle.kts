@@ -22,30 +22,10 @@ repositories {
 publishing {
     publications {
         create<MavenPublication>("maven") {
+            groupId = "com.dteknoloji"
+            version = "1.0.0"
             artifactId = "spring-redis-reactive-cache"
             from(components["java"])
-            pom {
-                name.set("Spring Redis Reactive Cache")
-                description.set("Adds annotation support to Spring for reactive cache operations")
-                licenses {
-                    license {
-                        name.set("The Apache License, Version 2.0")
-                        url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
-                    }
-                }
-                developers {
-                    developer {
-                        id.set("xnart")
-                        name.set("Bekir Durak")
-                        email.set("bekirdurak97@gmail.com")
-                    }
-                }
-                scm {
-                    connection.set("scm:git:git://example.com/my-library.git")
-                    developerConnection.set("scm:git:ssh://example.com/my-library.git")
-                    url.set("http://example.com/my-library/")
-                }
-            }
         }
     }
     repositories {
