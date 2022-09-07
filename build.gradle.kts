@@ -11,7 +11,7 @@ plugins {
 }
 
 group = "com.dteknoloji"
-version = "1.0.1-RELEASE"
+version = "1.0.2"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
 repositories {
@@ -23,13 +23,10 @@ publishing {
     publications {
         create<MavenPublication>("maven") {
             groupId = "com.dteknoloji"
-            version = "1.0.1"
+            version = "1.0.2"
             artifactId = "spring-redis-reactive-cache"
             from(components["java"])
         }
-    }
-    repositories {
-        mavenLocal()
     }
 }
 
@@ -81,4 +78,8 @@ tasks.withType<Test> {
 
 tasks.withType<BootJar> {
     enabled = false
+}
+
+tasks.withType<Jar> {
+    enabled = true
 }
