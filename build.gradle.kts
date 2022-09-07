@@ -11,7 +11,7 @@ plugins {
 }
 
 group = "com.dteknoloji"
-version = "1.0.0-RELEASE"
+version = "1.0.1-RELEASE"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
 repositories {
@@ -23,7 +23,7 @@ publishing {
     publications {
         create<MavenPublication>("maven") {
             groupId = "com.dteknoloji"
-            version = "1.0.0"
+            version = "1.0.1"
             artifactId = "spring-redis-reactive-cache"
             from(components["java"])
         }
