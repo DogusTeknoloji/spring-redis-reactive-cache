@@ -1,6 +1,8 @@
 ## spring-redis-reactive-cache
 Adds annotation support to Spring for reactive cache operations
 
+>Note : Works only with Kotlin.
+
 ### Usage
 
 First add Jitpack to repositories:
