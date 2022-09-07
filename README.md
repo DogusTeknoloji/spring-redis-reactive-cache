@@ -1,20 +1,46 @@
-# spring-redis-reactive-cache
+## spring-redis-reactive-cache
 Adds annotation support to Spring for reactive cache operations
 
 ### Usage
+
+First add Jitpack to repositories:
+>`maven { url 'https://jitpack.io' }`
+
+Add dependency:
+>`implementation("com.github.DogusTeknoloji:spring-redis-reactive-cache:1.0.3")`
+
 ```kotlin
-@RedisReactiveCachePut(keyPrefix = "CUSTOMER_", hashKey = "CUSTOMER_HASH", expireDuration = "P1D")
-suspend fun create(): CacheableCustomer {
-    return CacheableCustomer(id)
-}
+@Service
+class TodoService(private val todoApiClient: WebClient) {
 
-@RedisReactiveCacheEvict(keyPrefix = "CUSTOMER_", hashKey = "CUSTOMER_HASH", key = "#id")
-suspend fun delete(id: UUID) {}
+    @RedisReactiveCacheGet(key = "#id", keyPrefix = "TODO_", hashKey = "TODOS")
+    suspend fun getById(id: Int, cacheFirst: Boolean = false): Todo {
+        return todoApiClient.get()
+            .uri {
+                it.path("/{id}").build(id)
+            }
+            .retrieve()
+            .awaitBody()
+    }
 
-@RedisReactiveCacheGet(keyPrefix = "CUSTOMER_", hashKey = "CUSTOMER_HASH", key = "#id")
-suspend fun getById(id: UUID, cacheFirst: Boolean = false): CacheableCustomer {
-    return CacheableCustomer(id, "Jack")
+    @RedisReactiveCachePut(keyPrefix = "TODO_", hashKey = "TODOS", expireDuration = "P1D")
+    suspend fun create(todo: Todo): Todo {
+        return todoApiClient.post()
+            .bodyValue(todo)
+            .retrieve()
+            .awaitBody()
+    }
+
+    @RedisReactiveCacheEvict(keyPrefix = "TODO_", key = "#id", hashKey = "TODOS")
+    suspend fun delete(id: Int) {
+        todoApiClient.delete()
+            .uri {
+                it.path("/{id}").build(id)
+            }
+            .retrieve()
+            .awaitBodilessEntity()
+    }
 }
 ```
 
-TODO
+[Full example](https://github.com/DogusTeknoloji/spring-redis-reactive-cache/tree/main/example)
